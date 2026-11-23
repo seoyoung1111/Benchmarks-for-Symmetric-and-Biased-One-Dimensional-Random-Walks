@@ -1,0 +1,2 @@
+conditions,repetitions_per_condition,total_rejections_vs_exact,total_repetitions,mean_rejection_rate_vs_exact,min_rejection_rate_vs_exact,max_rejection_rate_vs_exact,max_abs_observed_minus_predicted,max_deviation_in_se,conditions_with_prediction_in_wilson_interval
+24,200,255,4800,0.053125000000000006,0.035,0.095,0.06653075545277998,1.8986572085040465,24
