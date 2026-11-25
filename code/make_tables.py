@@ -109,6 +109,33 @@ def supplementary_full_table() -> str:
                       rows, "rrlrrlr", widths=[8, 7, 17, 13, 15, 31, 9])
 
 
+def supplementary_approximation_table() -> str:
+    """Rejection counts of the repeated approximation test (Figure 3A), for the supplementary material."""
+    d = pd.read_csv(RESULTS / "approximation_rejection_rates.csv")
+
+    def pct(x: float) -> str:
+        if round(x, 9) == 1:
+            return "100.0"
+        return ">99.9" if x > 0.999 else f"{100 * x:.1f}"
+
+    rows = []
+    for _, r in d.iterrows():
+        rows.append([
+            f"{int(r.steps):,}", f"{int(r.trials):,}", f"{int(r.trials_over_n_squared):,}",
+            f"{int(r.rejections_vs_approximation)}",
+            f"{pct(r.rejection_rate_vs_approximation)} ({pct(r.wilson_lower_vs_approximation)}, "
+            f"{pct(r.wilson_upper_vs_approximation)})",
+            f"{100 * r.predicted_rejection_probability:.2f}",
+            z(r.observed_minus_predicted_in_se),
+            f"{int(r.rejections_vs_exact)}",
+        ])
+    return pipe_table(
+        ["$n$", "$N$", "$N/n^2$", "Rejections of $\\sqrt{2n/\\pi}$ (of 200)",
+         "Rejection rate, % (Wilson 95% CI)", "Predicted, % (Eq. 8)", "Difference (SE)",
+         "Rejections of exact value (of 200)"],
+        rows, "rrrrlrrr", widths=[6, 11, 7, 14, 22, 12, 12, 16])
+
+
 def table4_convergence() -> str:
     d = pd.read_csv(RESULTS / "convergence_rates_with_ci.csv")
     need = pd.read_csv(RESULTS / "trials_for_1pct_precision.csv").set_index("metric")["trials_needed"]
@@ -139,6 +166,7 @@ def main() -> None:
         (TABLES / f"table{i}.md").write_text(builder(), encoding="utf-8")
         print("wrote", TABLES / f"table{i}.md")
     (TABLES / "tableS1.md").write_text(supplementary_full_table(), encoding="utf-8")
+    (TABLES / "tableS2.md").write_text(supplementary_approximation_table(), encoding="utf-8")
 
 
 if __name__ == "__main__":
