@@ -10,11 +10,11 @@ This folder contains what is needed to check the results in the article: the der
 
 | Path | What it is |
 |:--|:--|
-| `Supplementary_Material.docx` | Supplementary Table S1 (every estimate with its exact value, 95% confidence interval, and z-score) and Appendix S1 (proof of Equation 5, the exact mean distance from the origin) |
+| `Supplementary_Material.docx` | Supplementary Table S1 (every estimate with its exact value, 95% confidence interval, and z-score), Table S2 (rejection counts of the repeated approximation test with Wilson intervals and predicted probabilities), Appendix S1 (proof of Equation 5, the exact mean distance from the origin), and Appendix S2 (parity and the error of the large-step approximation) |
 | `code/` | Five Python scripts and `requirements.txt` (pinned package versions) |
 | `results/` | All numerical outputs (CSV and NPZ), the run manifest, and a record of the software environment |
 | `figures/` | Figures 1–6 of the article, written by `code/make_figures.py` |
-| `manuscript/tables/` | Tables 1–4 and Table S1 in Markdown, written by `code/make_tables.py` |
+| `manuscript/tables/` | Tables 1–4 and Tables S1–S2 in Markdown, written by `code/make_tables.py` |
 
 ## Reproducing the results
 
@@ -38,11 +38,11 @@ python3 -m venv .venv
 | `extra_analyses.py` | Standard errors, confidence intervals, z-scores, sample paths, drift thresholds, and the trials needed for 1% precision |
 | `approximation_study.py` | The repeated approximation test (24 conditions, 200 repetitions each), Wilson confidence intervals for the rejection rates, and the trial counts at which Equation (8) gives a 10% and a 50% rejection probability |
 | `make_figures.py` | Figures 1–6 |
-| `make_tables.py` | Tables 1–4 and Table S1 |
+| `make_tables.py` | Tables 1–4 and Tables S1–S2 |
 
 The scripts overwrite the files in `results/`, `figures/`, and `manuscript/tables/`. The whole pipeline takes about a minute and a half on a laptop; most of that time is the approximation test.
 
-Two runs from scratch on the computer used for the article produced byte-identical CSV and NPZ files and pixel-identical figures. On another operating system or processor, floating-point values may differ in their last digits. `results/environment_info.txt` records the Python build and operating system of the run, so it differs between computers.
+Two runs from scratch on the computer used for the article produced byte-identical CSV and NPZ files and pixel-identical Figures 1–6. The diagnostic plots in `results/` can differ by a few pixels in cropping between runs. On another operating system or processor, floating-point values may differ in their last digits. `results/environment_info.txt` records the Python build and operating system of the run, so it differs between computers.
 
 ## Seeds
 
@@ -76,7 +76,7 @@ print(np.mean(np.abs(2 * k - n)))                           # equals average_abs
 |:--|:--|
 | Figure 1 | `sample_paths.npz` |
 | Table 2, Figure 2, Table S1 (symmetric walks) | `symmetric_with_uncertainty.csv` |
-| Figure 3 and the approximation results | `approximation_rejection_rates.csv`, `approximation_raw_results.csv`, `approximation_critical_trials.csv`, `approximation_rule_constant.csv`, `approximation_summary.csv` |
+| Figure 3, Table S2, and the approximation results | `approximation_rejection_rates.csv`, `approximation_raw_results.csv`, `approximation_critical_trials.csv`, `approximation_rule_constant.csv`, `approximation_summary.csv` |
 | Figure 4 | `endpoint_samples.npz` |
 | Table 3, Figure 5, Table S1 (biased walks) | `biased_with_uncertainty.csv`, `endpoint_samples.npz` |
 | Table 4, Figure 6 | `convergence_raw_results.csv`, `convergence_summary.csv`, `convergence_rates_with_ci.csv`, `trials_for_1pct_precision.csv` |
